@@ -1,5 +1,5 @@
-# AWS Infrastructure
-A collection of components for the building of an AWS infrastructure.
+# ec2_get_avail_zones
+Ansible module to get availability zones
 
 # Requirements:
 - Ansible
