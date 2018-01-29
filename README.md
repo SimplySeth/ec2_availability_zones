@@ -1,4 +1,4 @@
-# ec2_get_avail_zones
+# ec2ec2_availibity_zones
 Ansible module to get availability zones
 
 # Requirements:
