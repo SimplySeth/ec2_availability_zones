@@ -107,12 +107,12 @@ def main():
         ec2 = boto3.setup_default_session(region_name=module.params['region'])
         if module.params['aws_session_token'] and module.params['aws_access_key'] and module.params['aws_secret_key']:
             ec2 = boto3.client('ec2',
-                aws_access_key_id=module.params['aws_secret_access_key'],
+                aws_access_key_id=module.params['aws_access_key'],
                 aws_secret_access_key=module.params['aws_secret_key'],
                 aws_session_token=module.params['aws_session_token'])
         elif module.params['aws_access_key'] and module.params['aws_secret_key']:
             ec2 = boto3.client('ec2',
-                aws_access_key_id=module.params['aws_secret_access_key'],
+                aws_access_key_id=module.params['aws_access_key'],
                 aws_secret_access_key=module.params['aws_secret_key'])
         else:
             ec2 = boto3.client('ec2')
@@ -121,7 +121,7 @@ def main():
         result['changed'] = True
     except Exception as e:
         result['changed'] = False
-        module.fail_json(msg="str(e)")
+        module.fail_json(msg=e.message)
 
     # in the event of a successful module execution, you will want to
     # simple AnsibleModule.exit_json(), passing the key/value results
