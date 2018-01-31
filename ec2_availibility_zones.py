@@ -30,12 +30,12 @@ options:
         description:
             - What region you wish to query.
         required: true
-
-extends_documentation_fragment:
-    - ec2
-
-author:
-    - Your Name (@yourhandle)
+    state:
+        choices: ['available','information','impaired','unavailable']
+        default: available
+        description:
+          - What state should the availability zone be in when queried.
+        required: false
 '''
 
 EXAMPLES = '''
@@ -75,7 +75,9 @@ def main():
         region=dict(type='str', required=True),
         aws_access_key=dict(type='str', required=False),
         aws_secret_key=dict(type='str', required=False),
-        aws_session_token=dict(type='str', required=False)
+        aws_session_token=dict(type='str', required=False),
+        state=dict(type='str', required=False,default='available',
+        choices=['available','information','impaired','unavailable'])
     )
 
     # seed the result dict in the object
@@ -117,7 +119,9 @@ def main():
         else:
             ec2 = boto3.client('ec2')
 
-        filters = [{'Name':'state','Values':['available']}]
+        state = list()
+        state.append(module.params['state'])
+        filters = [{'Name':'state','Values':state}]
         result['zones'] = ec2.describe_availability_zones(Filters=filters)['AvailabilityZones']
         result['changed'] = True
     except Exception as e:
