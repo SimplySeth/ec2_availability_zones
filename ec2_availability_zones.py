@@ -54,8 +54,14 @@ EXAMPLES = '''
 '''
 
 RETURN = '''
-message:
-    description: Returns a list of dictionaries.
+Messages:
+    Description: "Any messages attached to the zone."
+RegionName:
+    Description: "Name of the Region."
+State:
+    Description: "What state is the availability zone in"
+ZoneName:
+    Description: "The name of the zone."
 '''
 
 from ansible.module_utils.basic import AnsibleModule
