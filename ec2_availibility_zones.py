@@ -117,7 +117,8 @@ def main():
         else:
             ec2 = boto3.client('ec2')
 
-        result['zones'] = ec2.describe_availability_zones()['AvailabilityZones']
+        filters = [{'Name':'state','Values':['available']}]
+        result['zones'] = ec2.describe_availability_zones(Filters=filters)['AvailabilityZones']
         result['changed'] = True
     except Exception as e:
         result['changed'] = False
